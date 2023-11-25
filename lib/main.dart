@@ -3,16 +3,19 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:lotto_korea/common/const/const_value.dart';
 import 'package:lotto_korea/common/dio/dio.dart';
 import 'package:lotto_korea/common/layout/base_screen.dart';
 import 'package:lotto_korea/common/value/value.dart';
 import 'package:lotto_korea/model/lotto_info_model.dart';
 import 'package:lotto_korea/repository/lotto_info_repository.dart';
+import 'package:lotto_korea/riverpod/state_provider.dart';
 import 'package:lotto_korea/view/button_screen/button_screen.dart';
 import 'package:lotto_korea/view/check_screen/check_box.dart';
 import 'package:lotto_korea/view/check_screen/check_screen.dart';
 import 'package:lotto_korea/view/table/paginated_data_table.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'ad_helper.dart';
 
@@ -25,11 +28,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
+  initSetting()async {
+    prefs = await SharedPreferences.getInstance();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // TODO: Load a banner ad
+    initSetting();
     // BannerAd(
     //   adUnitId: AdHelper.bannerAdUnitId,
     //   request: AdRequest(),
@@ -58,7 +65,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-
     SliverToBoxAdapter renderTop(){
       return SliverToBoxAdapter(
         child: Container(

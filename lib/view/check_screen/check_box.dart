@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lotto_korea/common/value/value.dart';
+import 'package:lotto_korea/riverpod/state_provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CheckBox extends StatefulWidget {
-  final bool isChecked;
   final int num;
-  const CheckBox({super.key, required this.isChecked, required this.num});
+  const CheckBox({super.key, required this.num});
 
   @override
   State<CheckBox> createState() => _CheckBoxState();
@@ -26,19 +26,18 @@ class _CheckBoxState extends State<CheckBox> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    isChecked = widget.isChecked;
   }
 
   Widget  unit(int num) => InkWell(
     onTap: (){
-      setState(() {
-        isChecked = !isChecked;
-      });
-      if(isChecked){
-        userCheckedNumbers.add(widget.num);
+      if(!mainRef.watch(userCheckedNumbers.notifier).state.contains(widget.num)){
+        mainRef.watch(userCheckedNumbers.notifier).state.add(widget.num);
       }else{
-        userCheckedNumbers.remove(widget.num);
+        mainRef.watch(userCheckedNumbers.notifier).state.remove(widget.num);
       }
+      setState(() {
+
+      });
     },
     child: Center(
       child: Container(
@@ -58,7 +57,7 @@ class _CheckBoxState extends State<CheckBox> {
               ),),
 
             Visibility(
-              visible: isChecked,
+              visible: mainRef.watch(userCheckedNumbers.notifier).state.contains(widget.num),
               child: Positioned(
                 top: 2,
                 bottom: 2,

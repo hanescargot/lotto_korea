@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:lotto_korea/common/value/value.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class BaseScreen extends ConsumerWidget {
   final Widget child;
@@ -13,7 +14,10 @@ class BaseScreen extends ConsumerWidget {
     mainRef = ref;
     return Scaffold(body: SafeArea(child: Stack(
       children: [
-        Center(child: child),
+        Center(child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 2.w),
+          child: child,
+        )),
         if (bannerAd != null)
           Align(
             alignment: Alignment.topCenter,

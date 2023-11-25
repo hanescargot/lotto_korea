@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lotto_korea/common/value/value.dart';
 import 'package:lotto_korea/controller/table_data_controller.dart';
 import 'package:lotto_korea/riverpod/state_provider.dart';
@@ -45,15 +46,21 @@ class ButtonScreen extends ConsumerWidget {
             if(provider){
               return;
             }
-
             mainRef.read(tableData.notifier).state.clear();
-            if(userCheckedNumbers.length==6){
+            if(mainRef.watch(userCheckedNumbers).length==6){
               ref.read(isLoading.notifier).update((state) => true);
               TableDataController().updateTableData();
-
+            }else{
+              Fluttertoast.showToast(
+                  msg: "번호 6개를 체크해 주세요",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
             }
-            // 프로세스 끝난 뒤
-            // userCheckedNumbers = [];
           },
           child: Container(
             width: 40.h,

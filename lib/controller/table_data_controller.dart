@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:lotto_korea/common/dio/dio.dart';
 import 'package:lotto_korea/common/value/value.dart';
 import 'package:lotto_korea/model/lotto_info_model.dart';
 import 'package:lotto_korea/model/table_info_model.dart';
 import 'package:lotto_korea/repository/lotto_info_repository.dart';
+import 'package:lotto_korea/riverpod/state_provider.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 
 class TableDataController{
   getRank(List<int> user, List<int> result, int bNum){
@@ -48,17 +53,18 @@ class TableDataController{
     }
   }
 
-
-  updateTableData()async {
-    print("!!!");
-    Dio dio = Dio();
-    dio.interceptors.add(CustomInterceptor());
-    LottoInfoRepository lir = LottoInfoRepository(dio, baseUrl: 'https://www.dhlottery.co.kr');
-
-
+  checkNumbers(LottoInfoRepository lir)async{
     for(int i=1; i<2000; i++){
-      LottoInfoModel? lim = await lir.getLottoInfoModel(drwNo: i);
-      if(lim==null){
+      LottoInfoModel? lim;
+      try {
+        lim = await lir.getLottoInfoModel(drwNo: i);
+
+        if(lim == null){
+          break;
+        }
+      }catch(e){
+        // 마지막 회차
+        mainRef.read(isLoading.notifier).update((state) => false);
         break;
       }
       List<int> drwNos = [lim.drwtNo1,lim.drwtNo2,lim.drwtNo3,lim.drwtNo4,lim.drwtNo5,lim.drwtNo6];
@@ -66,13 +72,21 @@ class TableDataController{
       int winamnt = getWinamnt(rank, lim.firstWinamnt);
 
       if(rank<6){
-        episodes.add(TableInfoModel(dwrNo: lim.drwNo, rank: rank, winamnt: winamnt, drwNos: drwNos, drwNoDatedwrNo: lim.drwNoDate, ).toComparableList());
+        mainRef.read(tableData.notifier).state
+            .add(TableInfoModel(dwrNo: lim.drwNo, rank: rank, winamnt: winamnt, drwNos: drwNos, drwNoDatedwrNo: lim.drwNoDate, ).toComparableList());
+        updateSorting();
       }
 
     }
+  }
 
 
-    // episodes.add(TableInfoModel(dwrNo: 66, rank: 7, winamnt: 8, drwNos: [9], drwNoDatedwrNo: "99").toComparableList());
+  updateTableData()async {
+    Dio dio = Dio();
+    dio.interceptors.add(CustomInterceptor());
+    LottoInfoRepository lir = LottoInfoRepository(dio, baseUrl: 'https://www.dhlottery.co.kr');
+
+    checkNumbers(lir);
 
   }
 }

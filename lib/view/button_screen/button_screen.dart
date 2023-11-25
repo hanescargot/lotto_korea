@@ -1,18 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lotto_korea/common/value/value.dart';
 import 'package:lotto_korea/controller/table_data_controller.dart';
+import 'package:lotto_korea/riverpod/state_provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ButtonScreen extends StatelessWidget {
+class ButtonScreen extends ConsumerWidget {
   const ButtonScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final provider = ref.watch(isLoading);
     return Column(
       children: [
         SizedBox(
-          height: 5.h,
+          height: 3.h,
         ),
         RichText(
             text: TextSpan(
@@ -34,19 +37,26 @@ class ButtonScreen extends StatelessWidget {
               TextSpan(text: "에 당첨된 적 있는지 확인하기"),
             ])),
         SizedBox(
-          height: 5.h,
+          height: 2.h,
         ),
         InkWell(
+          borderRadius: BorderRadius.circular(800),
           onTap: (){
-            episodes.clear();
+            if(provider){
+              return;
+            }
+
+            mainRef.read(tableData.notifier).state.clear();
             if(userCheckedNumbers.length==6){
+              ref.read(isLoading.notifier).update((state) => true);
               TableDataController().updateTableData();
+
             }
             // 프로세스 끝난 뒤
             // userCheckedNumbers = [];
           },
           child: Container(
-            width: 40.w,
+            width: 40.h,
             height: 10.h,
             decoration: BoxDecoration(
               color: Colors.pink,
@@ -54,10 +64,10 @@ class ButtonScreen extends StatelessWidget {
             ),
             child: Center(
                 child: Text(
-              "시작!",
+                  provider?"Loading ..":"시작!",
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: 24.sp,
+                  fontSize:20.sp,
                   fontWeight: FontWeight.bold,
                   fontFamily: "KCC"),
             )),

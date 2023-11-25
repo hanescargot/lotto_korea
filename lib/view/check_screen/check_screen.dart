@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lotto_korea/common/layout/base_screen.dart';
 import 'package:lotto_korea/common/value/value.dart';
 import 'package:lotto_korea/view/check_screen/check_box.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CheckScreen extends StatefulWidget {
   const CheckScreen({super.key});
@@ -17,12 +18,16 @@ class _CheckScreenState extends State<CheckScreen> {
   @override
   Widget build(BuildContext context) {
     return  BaseScreen(child:
-      Center(
+      Container(
+        height:60.h,
         child:  GridView.builder(
+
+          physics: NeverScrollableScrollPhysics(), // 스크롤 금지
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 7, // 열의 수
-            // crossAxisSpacing: 4.0, // 열 간의 간격
-            mainAxisSpacing: 32.0, // 행 간의 간격
+            crossAxisSpacing: 1.h, // 열 간의 간격
+            mainAxisSpacing: 1.h, // 행 간의 간격
+          mainAxisExtent: 7.h,
           ),
           itemCount: map.length * map[0].length,
           itemBuilder: (context, index) {

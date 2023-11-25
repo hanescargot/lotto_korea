@@ -1,12 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:lotto_korea/common/value/value.dart';
 
-class BaseScreen extends StatelessWidget {
+class BaseScreen extends ConsumerWidget {
   final Widget child;
   const BaseScreen({super.key, required this.child});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: SafeArea(child: child));
+  Widget build(BuildContext context, WidgetRef ref) {
+    mainRef = ref;
+    return Scaffold(body: SafeArea(child: Stack(
+      children: [
+        Center(child: child),
+        if (bannerAd != null)
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              width: bannerAd!.size.width.toDouble(),
+              height: bannerAd!.size.height.toDouble(),
+              child: AdWidget(ad: bannerAd!),
+            ),
+          ),
+      ],
+    )));
   }
 }

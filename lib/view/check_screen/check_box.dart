@@ -13,8 +13,8 @@ class CheckBox extends StatefulWidget {
 }
 
 class _CheckBoxState extends State<CheckBox> {
-  double _height = 12.w;
-  double _width = 4.w;
+  double _height = 5.h;
+  double _width = 4.h;
   late bool isChecked;
 
   @override

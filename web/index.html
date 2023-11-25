@@ -37,7 +37,30 @@
     const serviceWorkerVersion = null;
   </script>
   <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
+  <script src="flutter.js" defer>
+      import http from 'http';
+      import express from 'express';
+      import cors from 'cors';
+      const app = express();
+      const server = createServer(app);
+
+      const PORT = 8080;
+          const corsOptions ={
+             origin:'*',
+             credentials:true,
+             optionSuccessStatus:200,
+          }
+
+      app.use(cors(corsOptions));
+
+      app.get('/', (req, res) => {
+          res.send('Hello, World!');
+      });
+
+      server.listen(PORT, () => {
+          console.log(`Server running on ${PORT}`);
+      });
+  </script>
 </head>
 <body>
   <script>
@@ -48,7 +71,7 @@
           serviceWorkerVersion: serviceWorkerVersion,
         },
         onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
+          engineInitializer.initializeEngine({ renderer:"html" }).then(function(appRunner) {
             appRunner.runApp();
           });
         }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lotto_korea/riverpod/state_provider.dart';
 
 import '../../common/value/value.dart';
 
@@ -57,14 +58,12 @@ class MyDataSource extends DataTableSource {
 }
 
 class DataTableExample extends StatefulWidget {
-  const DataTableExample({super.key});
-
   @override
   State<DataTableExample> createState() => _DataTableExampleState();
 }
 
 class _DataTableExampleState extends State<DataTableExample> {
-  MyDataSource dataSource = MyDataSource()..setData(episodes, 0, true);
+  MyDataSource dataSource = MyDataSource()..setData(mainRef.watch(tableData), 0, true);
 
   int _columnIndex = 0;
   bool _columnAscending = true;
@@ -73,12 +72,15 @@ class _DataTableExampleState extends State<DataTableExample> {
     setState(() {
       _columnIndex = columnIndex;
       _columnAscending = ascending;
-      dataSource.setData(episodes, _columnIndex, _columnAscending);
+      dataSource.setData(mainRef.watch(tableData), _columnIndex, _columnAscending);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    updateSorting = (){
+      _sort(1, false);
+    };
     return PaginatedDataTable(
       key: Key("Lotto"),
       sortColumnIndex: _columnIndex,

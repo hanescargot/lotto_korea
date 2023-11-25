@@ -6,8 +6,10 @@ class CustomInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     print("[요청] ${options.method} ${options.path}");
+    options.headers = {'Access-Control-Allow-Origin':'*'};
     // TODO: implement onRequest
     super.onRequest(options, handler);
+
   }
 
   @override

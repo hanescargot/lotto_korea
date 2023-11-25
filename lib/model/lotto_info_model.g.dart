@@ -8,11 +8,11 @@ part of 'lotto_info_model.dart';
 
 LottoInfoModel _$LottoInfoModelFromJson(Map<String, dynamic> json) =>
     LottoInfoModel(
-      drwNoDate: json['drwNoDate'] as String?,
-      totSellamnt: (json['totSellamnt'] as num?)?.toDouble(),
-      firstWinamnt: (json['firstWinamnt'] as num?)?.toDouble(),
-      firstPrzwnerCo: json['firstPrzwnerCo'] as int?,
-      firstAccumamnt: json['firstAccumamnt'] as int?,
+      drwNoDate: json['drwNoDate'] as String,
+      totSellamnt: (json['totSellamnt'] as num).toDouble(),
+      firstWinamnt: (json['firstWinamnt'] as num).toDouble(),
+      firstPrzwnerCo: json['firstPrzwnerCo'] as int,
+      firstAccumamnt: json['firstAccumamnt'] as int,
       drwtNo1: json['drwtNo1'] as int,
       drwtNo2: json['drwtNo2'] as int,
       drwtNo3: json['drwtNo3'] as int,
@@ -20,8 +20,8 @@ LottoInfoModel _$LottoInfoModelFromJson(Map<String, dynamic> json) =>
       drwtNo5: json['drwtNo5'] as int,
       drwtNo6: json['drwtNo6'] as int,
       bnusNo: json['bnusNo'] as int,
-      drwtNo: json['drwtNo'] as int?,
-      returnValue: json['returnValue'] as String?,
+      drwNo: json['drwNo'] as int,
+      returnValue: json['returnValue'] as String,
     );
 
 Map<String, dynamic> _$LottoInfoModelToJson(LottoInfoModel instance) =>
@@ -39,5 +39,5 @@ Map<String, dynamic> _$LottoInfoModelToJson(LottoInfoModel instance) =>
       'drwtNo5': instance.drwtNo5,
       'drwtNo6': instance.drwtNo6,
       'bnusNo': instance.bnusNo,
-      'drwtNo': instance.drwtNo,
+      'drwNo': instance.drwNo,
     };

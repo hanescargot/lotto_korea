@@ -1,7 +1,7 @@
 class TableInfoModel{
   final int dwrNo;
   final int rank; // 등수
-  final double winamnt;// 상금
+  final int winamnt;// 상금
   final List<int>drwNos; // 당첨번호 + 보너스 번호
 
   final String drwNoDatedwrNo;

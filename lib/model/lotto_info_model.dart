@@ -22,12 +22,12 @@ part 'lotto_info_model.g.dart';
 
 @JsonSerializable()
 class LottoInfoModel{
-  final String? returnValue;
-  final String? drwNoDate;
-  final double? totSellamnt;
-  final double? firstWinamnt;
-  final int? firstPrzwnerCo;
-  final int? firstAccumamnt;
+  final String returnValue;
+  final String drwNoDate;
+  final double totSellamnt;
+  final double firstWinamnt;
+  final int firstPrzwnerCo;
+  final int firstAccumamnt;
   final int drwtNo1;
   final int drwtNo2;
   final int drwtNo3;
@@ -35,9 +35,9 @@ class LottoInfoModel{
   final int drwtNo5;
   final int drwtNo6;
   final int bnusNo;
-  final int? drwtNo;
+  final int drwNo;
 
-  LottoInfoModel({required this.drwNoDate, required this.totSellamnt, required this.firstWinamnt, required this.firstPrzwnerCo, required this.firstAccumamnt, required this.drwtNo1, required this.drwtNo2, required this.drwtNo3, required this.drwtNo4, required this.drwtNo5, required this.drwtNo6, required this.bnusNo, required this.drwtNo, required this.returnValue});
+  LottoInfoModel({required this.drwNoDate, required this.totSellamnt, required this.firstWinamnt, required this.firstPrzwnerCo, required this.firstAccumamnt, required this.drwtNo1, required this.drwtNo2, required this.drwtNo3, required this.drwtNo4, required this.drwtNo5, required this.drwtNo6, required this.bnusNo, required this.drwNo, required this.returnValue});
 
 //   // 생성자처럼 클래스의 인스턴스를 생성할 수 있지만, 항상 새로운 인스턴스를 생성하는 것이 아니라 이미 생성된 인스턴스를 반환
 // factory LottoInfoModel.fromJson({required Map<String, dynamic> json}){

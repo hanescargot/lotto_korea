@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lotto_korea/common/value/value.dart';
 import 'package:lotto_korea/controller/table_data_controller.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -37,7 +38,12 @@ class ButtonScreen extends StatelessWidget {
         ),
         InkWell(
           onTap: (){
-            TableDataController().updateTableData();
+            episodes.clear();
+            if(userCheckedNumbers.length==6){
+              TableDataController().updateTableData();
+            }
+            // 프로세스 끝난 뒤
+            // userCheckedNumbers = [];
           },
           child: Container(
             width: 40.w,

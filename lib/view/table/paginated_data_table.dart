@@ -41,7 +41,7 @@ class MyDataSource extends DataTableSource {
         cellFor(
             '${sortedData[index][0]}회'),
         cellFor(sortedData[index][1]),
-        cellFor(sortedData[index][2]),
+        cellFor('${sortedData[index][2]==0?"-":sortedData[index][2].toString()+"원"}'),
         cellFor(sortedData[index][3]),
         cellFor(sortedData[index][4]),
 

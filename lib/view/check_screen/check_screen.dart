@@ -56,8 +56,8 @@ class _CheckScreenState extends State<CheckScreen> {
               mainRef.read(userCheckedNumbers.notifier).state.clear();
               mainRef.read(tableData.notifier).state.clear();
               setState(() {
-
               });
+              updateSorting();
           },
     child: Icon(Icons.change_circle_outlined, color: Colors.pink,size: 12.w,),
       ),

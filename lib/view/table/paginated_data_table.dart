@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:lotto_korea/model/lotto_info_model.dart';
 import 'package:lotto_korea/riverpod/state_provider.dart';
 
 import '../../common/value/value.dart';
@@ -11,6 +14,7 @@ class MyDataSource extends DataTableSource {
   late List<List<Comparable<Object>>> sortedData;
   void setData(List<List<Comparable<Object>>> rawData, int sortColumn,
       bool sortAscending) {
+    print("!!${rawData}");
     sortedData = rawData.toList()
       ..sort((List<Comparable<Object>> a, List<Comparable<Object>> b) {
         final Comparable<Object> cellA = a[_displayIndexToRawIndex[sortColumn]];
@@ -25,12 +29,12 @@ class MyDataSource extends DataTableSource {
 
   static DataCell cellFor(Object data) {
     String value;
-    if (data is DateTime) {
-      value =
-      '${data.year}-${data.month.toString().padLeft(2, '0')}-${data.day.toString().padLeft(2, '0')}';
-    } else {
+    // if (data is DateTime) {
+    //   value =
+    //   '${data.year}-${data.month.toString().padLeft(2, '0')}-${data.day.toString().padLeft(2, '0')}';
+    // } else {
       value = data.toString();
-    }
+    // }
     return DataCell(Text(value));
   }
 

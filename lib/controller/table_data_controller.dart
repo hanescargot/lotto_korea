@@ -83,6 +83,7 @@ class TableDataController{
         break;
       }
       List<int> drwNos = [lim.drwtNo1,lim.drwtNo2,lim.drwtNo3,lim.drwtNo4,lim.drwtNo5,lim.drwtNo6];
+      drwNos.sort((a, b) => a.compareTo(b));
       int rank = getRank(mainRef.watch(userCheckedNumbers), drwNos, lim.bnusNo,);
       int winamnt = getWinamnt(rank, lim.firstWinamnt);
 

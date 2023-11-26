@@ -20,7 +20,7 @@ class BaseScreen extends ConsumerWidget {
         )),
         if (bannerAd != null)
           Align(
-            alignment: Alignment.topCenter,
+            alignment: Alignment.bottomCenter,
             child: Container(
               width: bannerAd!.size.width.toDouble(),
               height: bannerAd!.size.height.toDouble(),

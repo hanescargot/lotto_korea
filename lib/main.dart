@@ -31,28 +31,32 @@ class _MyAppState extends State<MyApp> {
   initSetting()async {
     prefs = await SharedPreferences.getInstance();
   }
-
+  Future<InitializationStatus> _initGoogleMobileAds() {
+    // TODO: Initialize Google Mobile Ads SDK
+    return MobileAds.instance.initialize();
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     initSetting();
-    // BannerAd(
-    //   adUnitId: AdHelper.bannerAdUnitId,
-    //   request: AdRequest(),
-    //   size: AdSize.banner,
-    //   listener: BannerAdListener(
-    //     onAdLoaded: (ad) {
-    //       setState(() {
-    //         bannerAd  = ad as BannerAd;
-    //       });
-    //     },
-    //     onAdFailedToLoad: (ad, err) {
-    //       print('Failed to load a banner ad: ${err.message}');
-    //       ad.dispose();
-    //     },
-    //   ),
-    // ).load();
+    _initGoogleMobileAds();
+    BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId,
+      request: AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            bannerAd  = ad as BannerAd;
+          });
+        },
+        onAdFailedToLoad: (ad, err) {
+          print('Failed to load a banner ad: ${err.message}');
+          ad.dispose();
+        },
+      ),
+    ).load();
   }
 
   @override

@@ -2,9 +2,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:label="lotto_korea"
+        android:label="로또 코리아"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -33,6 +33,6 @@
             android:value="2" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="ca-app-pub-4204062878719612~1690279200"/>
     </application>
 </manifest>

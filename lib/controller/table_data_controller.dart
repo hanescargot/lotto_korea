@@ -117,13 +117,14 @@ class TableDataController{
           lim.drwtNo3,
           lim.drwtNo4,
           lim.drwtNo5,
-          lim.drwtNo6
+          lim.drwtNo6,
         ];
         drwNos.sort((a, b) => a.compareTo(b));
         int rank = getRank(
           mainRef.watch(userCheckedNumbers), drwNos, lim.bnusNo,);
         int winamnt = getWinamnt(rank, lim.firstWinamnt);
 
+        drwNos.add(lim.bnusNo);
         if (rank < 6) {
           mainRef
               .read(tableData.notifier)

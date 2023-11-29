@@ -8,7 +8,7 @@ import '../../common/value/value.dart';
 /// Flutter code sample for [PaginatedDataTable].
 
 class MyDataSource extends DataTableSource {
-  static const List<int> _displayIndexToRawIndex = <int>[0, 2, 3, 4, 5];
+  static const List<int> _displayIndexToRawIndex = <int>[0, 1, 2, 3, ];
 
   late List<List<Comparable<Object>>> sortedData;
   void setData(List<List<Comparable<Object>>> rawData, int sortColumn,
@@ -81,7 +81,7 @@ class _DataTableExampleState extends State<DataTableExample> {
   @override
   Widget build(BuildContext context) {
     updateSorting = (){
-      _sort(1, false);
+      _sort(1, true);
     };
     return PaginatedDataTable(
       key: Key("Lotto"),

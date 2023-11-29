@@ -1,4 +1,4 @@
-package com.example.lotto_korea
+package com.dpyrion.lotto_korea
 
 import io.flutter.embedding.android.FlutterActivity
 

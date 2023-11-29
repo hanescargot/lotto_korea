@@ -7,6 +7,7 @@ import 'package:lotto_korea/common/const/const_value.dart';
 import 'package:lotto_korea/common/dio/dio.dart';
 import 'package:lotto_korea/common/layout/base_screen.dart';
 import 'package:lotto_korea/common/value/value.dart';
+import 'package:lotto_korea/controller/table_data_controller.dart';
 import 'package:lotto_korea/model/lotto_info_model.dart';
 import 'package:lotto_korea/repository/lotto_info_repository.dart';
 import 'package:lotto_korea/riverpod/state_provider.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp>  {
 
   initSetting()async {
     prefs = await SharedPreferences.getInstance();
@@ -67,8 +68,10 @@ class _MyAppState extends State<MyApp> {
   }
 
 
-  @override
-  Widget build(BuildContext context) {
+@override
+Widget build(BuildContext context) {
+  // TODO: implement build
+
     SliverToBoxAdapter renderTop(){
       return SliverToBoxAdapter(
         child: Container(
@@ -99,6 +102,8 @@ class _MyAppState extends State<MyApp> {
         ),
       );
     }
+
+
 
 
     return ResponsiveSizer(

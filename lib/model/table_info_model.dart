@@ -11,7 +11,6 @@ class TableInfoModel{
   TableInfoModel({required this.dwrNo, required this.rank, required this.winamnt, required this.drwNos, required this.drwNoDatedwrNo, });
 
   List<Comparable<Object>> toComparableList() {
-
     return [dwrNo, rank, winamnt, drwNos.join(", "), drwNoDatedwrNo];
   }
 }

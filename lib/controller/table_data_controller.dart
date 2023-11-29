@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lotto_korea/common/const/const_value.dart';
 import 'package:lotto_korea/common/dio/dio.dart';
 import 'package:lotto_korea/common/value/value.dart';
@@ -55,7 +56,11 @@ class TableDataController{
     }
   }
 
-  checkNumbers(LottoInfoRepository lir)async{
+  loadHistory(WidgetRef ref)async{
+    prefs = await SharedPreferences.getInstance();
+    Dio dio = Dio();
+    dio.interceptors.add(CustomInterceptor());
+    LottoInfoRepository lir = LottoInfoRepository(dio, baseUrl: 'https://www.dhlottery.co.kr');
     for(int i=1; i<2000; i++){
       LottoInfoModel? lim;
       try {
@@ -65,10 +70,10 @@ class TableDataController{
           if(action == null){
             lim = await lir.getLottoInfoModel(drwNo: i);
           }else{
-
             lim = LottoInfoModel.fromJson(jsonDecode(action));
           }
         }else{
+          ref.read(isHistoryLoading.notifier).update((state) => true);
           lim = await lir.getLottoInfoModel(drwNo: i);
           prefs.setString(i.toString(), jsonEncode(lim));
         }
@@ -78,22 +83,65 @@ class TableDataController{
         }
       }catch(e){
         // 마지막 회차
+        ref.read(isLoading.notifier).update((state) => false);
+        ref.read(isHistoryLoading.notifier).update((state) => false);
+        break;
+      }
+    }
+  }
 
+  checkNumbers(LottoInfoRepository lir)async{
+    for(int i=1; i<2000; i++){
+      LottoInfoModel? lim;
+      try {
+        // 내부저장소에 있는지 확인
+        if (prefs.containsKey(i.toString())) {
+          final String? action = prefs.getString('$i');
+          if (action == null) {
+            lim = await lir.getLottoInfoModel(drwNo: i);
+          } else {
+            lim = LottoInfoModel.fromJson(jsonDecode(action));
+          }
+        } else {
+          lim = await lir.getLottoInfoModel(drwNo: i);
+          prefs.setString(i.toString(), jsonEncode(lim));
+        }
+
+        if (lim == null) {
+          break;
+        }
+
+        List<int> drwNos = [
+          lim.drwtNo1,
+          lim.drwtNo2,
+          lim.drwtNo3,
+          lim.drwtNo4,
+          lim.drwtNo5,
+          lim.drwtNo6
+        ];
+        drwNos.sort((a, b) => a.compareTo(b));
+        int rank = getRank(
+          mainRef.watch(userCheckedNumbers), drwNos, lim.bnusNo,);
+        int winamnt = getWinamnt(rank, lim.firstWinamnt);
+
+        if (rank < 6) {
+          mainRef
+              .read(tableData.notifier)
+              .state
+              .add(TableInfoModel(dwrNo: lim.drwNo,
+            rank: rank,
+            winamnt: winamnt,
+            drwNos: drwNos,
+            drwNoDatedwrNo: lim.drwNoDate,).toComparableList());
+          updateSorting();
+        }
+      }catch(e){
+        // 마지막 회차
         mainRef.read(isLoading.notifier).update((state) => false);
         break;
       }
-      List<int> drwNos = [lim.drwtNo1,lim.drwtNo2,lim.drwtNo3,lim.drwtNo4,lim.drwtNo5,lim.drwtNo6];
-      drwNos.sort((a, b) => a.compareTo(b));
-      int rank = getRank(mainRef.watch(userCheckedNumbers), drwNos, lim.bnusNo,);
-      int winamnt = getWinamnt(rank, lim.firstWinamnt);
-
-      if(rank<6){
-        mainRef.read(tableData.notifier).state
-            .add(TableInfoModel(dwrNo: lim.drwNo, rank: rank, winamnt: winamnt, drwNos: drwNos, drwNoDatedwrNo: lim.drwNoDate, ).toComparableList());
-        updateSorting();
-      }
-
     }
+
   }
 
 

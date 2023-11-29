@@ -15,7 +15,6 @@ class CustomInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     // TODO: implement onResponse
-    print("[data] ${response.data}");
     response.data =jsonDecode(response.data);
     super.onResponse(response, handler);
   }

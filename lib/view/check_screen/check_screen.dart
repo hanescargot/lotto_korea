@@ -59,7 +59,7 @@ class _CheckScreenState extends State<CheckScreen> {
               });
               updateSorting();
           },
-    child: Icon(Icons.change_circle_outlined, color: Colors.pink,size: 12.w,),
+    child: Icon(Icons.change_circle_outlined, color: Colors.pink,size: 8.h,),
       ),
     )
         ],
